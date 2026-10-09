@@ -179,6 +179,97 @@ Desentupidora Chama Nóis | Atendimento rápido
 </section>
 
 
+</section>
+
+
+<!-- TRABALHOS REALIZADOS -->
+<section id="trabalhos" class="works-section">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span>TRABALHOS REALIZADOS</span>
+
+            <h2>
+                Confira alguns dos nossos trabalhos
+            </h2>
+
+            <p>
+                Veja alguns serviços realizados pela
+                Desentupidora Chama Nóis.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            {% for trabalho in trabalhos %}
+
+                <div class="col-md-6 col-lg-4">
+
+                    <article class="work-card">
+
+                        <div class="work-image">
+
+                            <img
+                                src="{{ trabalho.imagem.url }}"
+                                alt="{{ trabalho.titulo }}"
+                                loading="lazy">
+
+                        </div>
+
+
+                        <div class="work-content">
+
+                            <h3>
+                                {{ trabalho.titulo }}
+                            </h3>
+
+                            {% if trabalho.descricao %}
+
+                                <p>
+                                    {{ trabalho.descricao|truncatewords:20 }}
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+                    </article>
+
+                </div>
+
+            {% empty %}
+
+                <div class="col-12">
+
+                    <div class="empty-works">
+
+                        <i class="bi bi-images"></i>
+
+                        <p>
+                            Em breve, novos trabalhos realizados.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+
+
 <!-- CTA -->
 <section class="cta-section">
 
@@ -220,3 +311,4 @@ Desentupidora Chama Nóis | Atendimento rápido
 </section>
 
 {% endblock %}
+
