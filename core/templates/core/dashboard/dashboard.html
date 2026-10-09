@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Dashboard | Chama Nóis
+{% endblock %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="dashboard-welcome">
+
+    <h1>
+        Olá, {{ request.user.username }}!
+    </h1>
+
+    <p>
+        Gerencie os trabalhos realizados e as avaliações
+        exibidas no site da Chama Nóis.
+    </p>
+
+</div>
+
+
+<div class="row g-4 mt-2">
+
+    <!-- TRABALHOS -->
+    <div class="col-md-6">
+
+<a
+        href="{% url 'core:novo_trabalho' %}"
+        class="btn btn-success">
+
+        Novo trabalho
+
+            <div class="dashboard-card">
+
+                <div class="dashboard-card-icon">
+                    <i class="bi bi-images"></i>
+                </div>
+
+                <div>
+                    <span>Trabalhos</span>
+
+                    <h2>0</h2>
+
+                    <p>
+                        Fotos e vídeos cadastrados
+                    </p>
+
+                    <span class="dashboard-card-action">
+                        Gerenciar trabalhos
+                        <i class="bi bi-arrow-right"></i>
+                    </span>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
+
+
+    <!-- AVALIAÇÕES -->
+    <div class="col-md-6">
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-card-icon orange">
+                <i class="bi bi-star-fill"></i>
+            </div>
+
+            <div>
+                <span>Avaliações</span>
+
+                <h2>0</h2>
+
+                <p>
+                    Avaliações cadastradas
+                </p>
+
+                <span class="dashboard-card-action">
+                    Gerenciar avaliações
+                    <i class="bi bi-arrow-right"></i>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

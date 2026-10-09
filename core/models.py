@@ -1,6 +1,8 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from .validators import validar_arquivo_midia
+
 
 class TrabalhoRealizado(models.Model):
     titulo = models.CharField(
@@ -13,18 +15,20 @@ class TrabalhoRealizado(models.Model):
         verbose_name='Descrição'
     )
 
-    foto_antes = models.ImageField(
+    arquivo_antes = models.FileField(
         upload_to='trabalhos/antes/',
+        validators=[validar_arquivo_midia],
         blank=True,
         null=True,
-        verbose_name='Foto antes'
+        verbose_name='Foto ou vídeo antes'
     )
 
-    foto_depois = models.ImageField(
+    arquivo_depois = models.FileField(
         upload_to='trabalhos/depois/',
+        validators=[validar_arquivo_midia],
         blank=True,
         null=True,
-        verbose_name='Foto depois'
+        verbose_name='Foto ou vídeo depois'
     )
 
     publicado = models.BooleanField(
@@ -50,6 +54,24 @@ class TrabalhoRealizado(models.Model):
     def __str__(self):
         return self.titulo
 
+    @property
+    def antes_eh_video(self):
+        if not self.arquivo_antes:
+            return False
+
+        return self.arquivo_antes.name.lower().endswith(
+            ('.mp4', '.webm', '.mov')
+        )
+
+    @property
+    def depois_eh_video(self):
+        if not self.arquivo_depois:
+            return False
+
+        return self.arquivo_depois.name.lower().endswith(
+            ('.mp4', '.webm', '.mov')
+        )
+
 
 class Avaliacao(models.Model):
     nome_cliente = models.CharField(
@@ -71,7 +93,7 @@ class Avaliacao(models.Model):
     )
 
     publicado = models.BooleanField(
-        default=True,
+        default=False,
         verbose_name='Publicado'
     )
 

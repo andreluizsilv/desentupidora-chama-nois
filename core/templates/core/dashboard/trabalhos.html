@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Trabalhos | Chama Nóis
+{% endblock %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex
+                justify-content-between
+                align-items-center
+                flex-wrap
+                gap-3
+                mb-4">
+
+        <div class="dashboard-welcome">
+
+            <h1>
+                Trabalhos realizados
+            </h1>
+
+            <p>
+                Gerencie as fotos e vídeos dos serviços realizados.
+            </p>
+
+        </div>
+
+
+        <a
+            href="{% url 'core:novo_trabalho' %}"
+            class="btn btn-success">
+
+            <i class="bi bi-plus-circle me-1"></i>
+
+            Novo trabalho
+
+        </a>
+
+    </div>
+
+
+    {% if trabalhos %}
+
+        <div class="row g-4">
+
+            {% for trabalho in trabalhos %}
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="dashboard-card h-100">
+
+                        <div>
+
+                            {% if trabalho.publicado %}
+
+                                <span class="badge bg-success mb-3">
+                                    Publicado
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-secondary mb-3">
+                                    Oculto
+                                </span>
+
+                            {% endif %}
+
+
+                            <h3>
+                                {{ trabalho.titulo }}
+                            </h3>
+
+
+                            {% if trabalho.descricao %}
+
+                                <p>
+                                    {{ trabalho.descricao|truncatechars:120 }}
+                                </p>
+
+                            {% endif %}
+
+
+                            <small class="text-muted">
+
+                                Cadastrado em
+                                {{ trabalho.criado_em|date:"d/m/Y H:i" }}
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="text-center py-5">
+
+            <i
+                class="bi bi-images"
+                style="font-size: 3rem;">
+            </i>
+
+            <h3 class="mt-3">
+                Nenhum trabalho cadastrado
+            </h3>
+
+            <p class="text-muted">
+                Cadastre o primeiro serviço realizado pela Chama Nóis.
+            </p>
+
+            <a
+                href="{% url 'core:novo_trabalho' %}"
+                class="btn btn-success">
+
+                <i class="bi bi-plus-circle me-1"></i>
+
+                Cadastrar primeiro trabalho
+
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

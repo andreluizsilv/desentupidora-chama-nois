@@ -527,3 +527,86 @@ body {
 
     font-size: 3rem;
 }
+
+/* =========================
+   TRABALHOS REALIZADOS
+========================= */
+
+.work-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 15px;
+}
+
+
+.work-media {
+    position: relative;
+    overflow: hidden;
+
+    height: 260px;
+
+    background: #000;
+
+    border-radius: 12px;
+}
+
+
+.work-media img,
+.work-media video {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+.work-media-label {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+
+    z-index: 2;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    background: var(--orange);
+    color: white;
+
+    font-size: 0.8rem;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+
+.work-media-label.after {
+    background: var(--green);
+}
+
+
+.work-no-media {
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+}
+
+
+@media (max-width: 576px) {
+
+    .work-comparison {
+        grid-template-columns: 1fr;
+    }
+
+    .work-media {
+        height: 230px;
+    }
+}
