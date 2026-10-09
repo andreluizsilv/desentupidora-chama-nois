@@ -1,0 +1,222 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Desentupidora Chama Nóis | Atendimento rápido
+{% endblock %}
+
+
+{% block content %}
+
+<!-- HERO -->
+<section class="hero">
+
+    <div class="container">
+
+        <div class="row align-items-center min-vh-100">
+
+            <!-- TEXTO -->
+            <div class="col-lg-6 hero-content">
+
+                <span class="hero-badge">
+                    <i class="bi bi-lightning-charge-fill"></i>
+                    Atendimento rápido
+                </span>
+
+                <h1>
+                    Entupiu?
+                    <span>Chama Nóis!</span>
+                </h1>
+
+                <p class="hero-description">
+                    Soluções rápidas e profissionais para
+                    desentupimentos, vazamentos, caixas de esgoto,
+                    gordura e muito mais.
+                </p>
+
+                <div class="hero-buttons">
+
+                    <a
+                        href="https://wa.me/5519988167035?text=Olá!%20Vim%20pelo%20site%20da%20Desentupidora%20Chama%20Nóis%20e%20preciso%20de%20atendimento."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-whatsapp btn-lg">
+
+                        <i class="bi bi-whatsapp"></i>
+                        Solicitar atendimento
+
+                    </a>
+
+                    <a href="#servicos"
+                       class="btn btn-outline-light btn-lg">
+
+                        Ver serviços
+
+                    </a>
+
+                </div>
+
+
+                <div class="hero-features">
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Atendimento rápido
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Serviço profissional
+                    </div>
+
+                    <div>
+                        <i class="bi bi-check-circle-fill"></i>
+                        Orçamento pelo WhatsApp
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LOGO -->
+            <div class="col-lg-6 text-center hero-logo">
+
+                <img
+                    src="{% static 'img/logo-chama-nois.png' %}"
+                    alt="Desentupidora Chama Nóis"
+                    class="img-fluid">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SERVIÇOS -->
+<section id="servicos" class="services-section">
+
+    <div class="container">
+
+        <div class="section-title">
+
+            <span>NOSSOS SERVIÇOS</span>
+
+            <h2>
+                Precisou? Chama Nóis!
+            </h2>
+
+            <p>
+                Atendimento para diferentes tipos de
+                desentupimento e manutenção.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        <i class="bi bi-droplet-fill"></i>
+                    </div>
+
+                    <h3>Pias e canos</h3>
+
+                    <p>
+                        Desentupimento de pias, tubulações
+                        e encanamentos.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+
+                    <div class="service-icon orange">
+                        <i class="bi bi-grid-3x3-gap-fill"></i>
+                    </div>
+
+                    <h3>Caixa de esgoto e gordura</h3>
+
+                    <p>
+                        Limpeza e desobstrução de caixas
+                        e redes de esgoto e gordura.
+                    </p>
+
+                </div>
+            </div>
+
+
+            <div class="col-md-6 col-lg-4">
+                <div class="service-card">
+
+                    <div class="service-icon">
+                        <i class="bi bi-water"></i>
+                    </div>
+
+                    <h3>Vazamentos</h3>
+
+                    <p>
+                        Identificação e atendimento de
+                        problemas com vazamentos.
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- CTA -->
+<section class="cta-section">
+
+    <div class="container">
+
+        <div class="cta-content">
+
+            <div>
+
+                <span>PRECISA DE ATENDIMENTO?</span>
+
+                <h2>
+                    Fale agora com a Chama Nóis
+                </h2>
+
+                <p>
+                    Entre em contato pelo WhatsApp e explique
+                    o problema para agilizar seu atendimento.
+                </p>
+
+            </div>
+
+
+            <a
+                href="https://wa.me/5519988167035?text=Olá!%20Preciso%20de%20atendimento."
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn btn-whatsapp btn-lg">
+
+                <i class="bi bi-whatsapp"></i>
+                Chamar no WhatsApp
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
