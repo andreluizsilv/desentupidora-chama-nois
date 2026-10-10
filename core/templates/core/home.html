@@ -120,7 +120,11 @@ Desentupidora Chama Nóis | Atendimento rápido
         <div class="row g-4">
 
             <div class="col-md-6 col-lg-4">
-                <div class="service-card">
+                <a
+                    href="https://wa.me/5519988167035?text=Ol%C3%A1!%20Tenho%20um%20problema%20com%20pias%20e%20canos.%20Preciso%20de%20atendimento."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="service-card">
 
                     <div class="service-icon">
                         <i class="bi bi-droplet-fill"></i>
@@ -133,12 +137,20 @@ Desentupidora Chama Nóis | Atendimento rápido
                         e encanamentos.
                     </p>
 
-                </div>
+                    <span class="service-whatsapp">
+                        <i class="bi bi-whatsapp"></i>
+                        Solicitar pelo WhatsApp
+                    </span>
+                </a>
             </div>
 
 
             <div class="col-md-6 col-lg-4">
-                <div class="service-card">
+                <a
+                    href="https://wa.me/5519988167035?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20caixa%20de%20esgoto%20e%20gordura."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="service-card">
 
                     <div class="service-icon orange">
                         <i class="bi bi-grid-3x3-gap-fill"></i>
@@ -151,12 +163,20 @@ Desentupidora Chama Nóis | Atendimento rápido
                         e redes de esgoto e gordura.
                     </p>
 
-                </div>
+                    <span class="service-whatsapp">
+                        <i class="bi bi-whatsapp"></i>
+                        Solicitar pelo WhatsApp
+                    </span>
+                </a>
             </div>
 
 
             <div class="col-md-6 col-lg-4">
-                <div class="service-card">
+                <a
+                    href="https://wa.me/5519988167035?text=Ol%C3%A1!%20Preciso%20de%20atendimento%20para%20um%20vazamento."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="service-card">
 
                     <div class="service-icon">
                         <i class="bi bi-water"></i>
@@ -169,7 +189,11 @@ Desentupidora Chama Nóis | Atendimento rápido
                         problemas com vazamentos.
                     </p>
 
-                </div>
+                    <span class="service-whatsapp">
+                        <i class="bi bi-whatsapp"></i>
+                        Solicitar pelo WhatsApp
+                    </span>
+                </a>
             </div>
 
         </div>
@@ -179,15 +203,12 @@ Desentupidora Chama Nóis | Atendimento rápido
 </section>
 
 
-</section>
-
-
 <!-- TRABALHOS REALIZADOS -->
 <section id="trabalhos" class="works-section">
 
     <div class="container">
 
-        <div class="section-title id='trabalhos'">
+        <div class="section-title">
 
             <span>TRABALHOS REALIZADOS</span>
 
@@ -211,13 +232,44 @@ Desentupidora Chama Nóis | Atendimento rápido
 
                     <article class="work-card">
 
-                        <div class="work-image">
+                        <div class="work-comparison">
+                            <div class="work-media">
+                                <span class="work-media-label">Antes</span>
+                                {% if trabalho.arquivo_antes %}
+                                    {% if trabalho.antes_eh_video %}
+                                        <video controls preload="metadata" playsinline>
+                                            <source src="{{ trabalho.arquivo_antes.url }}">
+                                            Seu navegador não suporta a reprodução de vídeo.
+                                        </video>
+                                    {% else %}
+                                        <img
+                                            src="{{ trabalho.arquivo_antes.url }}"
+                                            alt="Antes: {{ trabalho.titulo }}"
+                                            loading="lazy">
+                                    {% endif %}
+                                {% else %}
+                                    <div class="work-no-media">Sem mídia</div>
+                                {% endif %}
+                            </div>
 
-                            <img
-                                src="{{ trabalho.imagem.url }}"
-                                alt="{{ trabalho.titulo }}"
-                                loading="lazy">
-
+                            <div class="work-media">
+                                <span class="work-media-label after">Depois</span>
+                                {% if trabalho.arquivo_depois %}
+                                    {% if trabalho.depois_eh_video %}
+                                        <video controls preload="metadata" playsinline>
+                                            <source src="{{ trabalho.arquivo_depois.url }}">
+                                            Seu navegador não suporta a reprodução de vídeo.
+                                        </video>
+                                    {% else %}
+                                        <img
+                                            src="{{ trabalho.arquivo_depois.url }}"
+                                            alt="Depois: {{ trabalho.titulo }}"
+                                            loading="lazy">
+                                    {% endif %}
+                                {% else %}
+                                    <div class="work-no-media">Sem mídia</div>
+                                {% endif %}
+                            </div>
                         </div>
 
 
@@ -269,10 +321,6 @@ Desentupidora Chama Nóis | Atendimento rápido
 <!-- CTA -->
 <section class="cta-section">
 
-
-<!-- CTA -->
-<section class="cta-section">
-
     <div class="container">
 
         <div class="cta-content">
@@ -311,4 +359,3 @@ Desentupidora Chama Nóis | Atendimento rápido
 </section>
 
 {% endblock %}
-
