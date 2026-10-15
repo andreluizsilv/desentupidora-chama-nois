@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Usuários | Chama Nóis
+{% endblock %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="dashboard-welcome mb-4">
+        <span class="dashboard-label">ADMINISTRAÇÃO</span>
+        <h1>Usuários do dashboard</h1>
+        <p>
+            Conceda ao cliente acesso limitado para consultar e cadastrar
+            trabalhos. Essa permissão não libera o Django Admin.
+        </p>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div
+                class="alert alert-{{ message.tags|default:'info' }}"
+                role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="dashboard-form-card mb-4">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div>
+                <h2 class="h5 mb-2">Adicionar uma conta</h2>
+                <p class="text-muted mb-0">
+                    Compartilhe o link de cadastro. Novas contas ficam pendentes
+                    até você liberar o acesso ao dashboard.
+                </p>
+            </div>
+            <a
+                href="{% url 'core:cadastro_usuario' %}"
+                class="btn btn-outline-primary">
+                <i class="bi bi-box-arrow-up-right me-1"></i>
+                Abrir cadastro
+            </a>
+        </div>
+    </div>
+
+    <div class="dashboard-form-card">
+        <div class="table-responsive">
+            <table class="table align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th scope="col">Usuário</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Conta</th>
+                        <th scope="col">Acesso ao Django Admin</th>
+                        <th scope="col">Acesso ao dashboard</th>
+                        <th scope="col"><span class="visually-hidden">Ação</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuarios %}
+                        <tr>
+                            <td>
+                                <strong>{{ usuario.username }}</strong>
+                            </td>
+                            <td>{{ usuario.email|default:"—" }}</td>
+                            <td>
+                                {% if usuario.is_superuser %}
+                                    <span class="badge text-bg-primary">SuperAdmin</span>
+                                {% elif not usuario.is_active %}
+                                    <span class="badge text-bg-warning">Pendente</span>
+                                {% else %}
+                                    <span class="badge text-bg-success">Ativa</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if usuario.is_staff %}
+                                    <span class="badge text-bg-warning">Liberado</span>
+                                {% else %}
+                                    <span class="badge text-bg-secondary">Sem acesso</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if usuario.is_superuser %}
+                                    Acesso total
+                                {% elif usuario.id in usuarios_com_acesso %}
+                                    <span class="badge text-bg-success">Liberado</span>
+                                {% else %}
+                                    <span class="badge text-bg-secondary">Sem acesso</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                {% if not usuario.is_superuser %}
+                                    <div class="d-flex flex-wrap justify-content-end gap-2">
+                                        <a
+                                            href="{% url 'core:editar_usuario' usuario.id %}"
+                                            class="btn btn-sm btn-outline-primary">
+                                            Editar
+                                        </a>
+                                        <form
+                                            method="post"
+                                            action="{% url 'core:alterar_acesso_usuario' usuario.id %}">
+                                            {% csrf_token %}
+                                            {% if usuario.id in usuarios_com_acesso %}
+                                                <input
+                                                    type="hidden"
+                                                    name="action"
+                                                    value="revoke">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm btn-outline-danger">
+                                                    Remover acesso
+                                                </button>
+                                            {% else %}
+                                                <input
+                                                    type="hidden"
+                                                    name="action"
+                                                    value="grant">
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm btn-outline-success">
+                                                    Liberar acesso
+                                                </button>
+                                            {% endif %}
+                                        </form>
+                                        <form
+                                            method="post"
+                                            action="{% url 'core:excluir_usuario' usuario.id %}"
+                                            onsubmit="return confirm('Excluir permanentemente a conta de {{ usuario.username|escapejs }}? Esta ação não pode ser desfeita.');">
+                                            {% csrf_token %}
+                                            <button
+                                                type="submit"
+                                                class="btn btn-sm btn-danger">
+                                                Excluir usuário
+                                            </button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                Nenhum usuário cadastrado.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <a
+        href="{% url 'core:dashboard' %}"
+        class="btn btn-link mt-3 px-0">
+        <i class="bi bi-arrow-left me-1"></i>
+        Voltar ao dashboard
+    </a>
+
+</div>
+
+{% endblock %}

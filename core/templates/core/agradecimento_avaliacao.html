@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Obrigado pela sua mensagem | Chama Nóis
+{% endblock %}
+
+
+{% block content %}
+
+<section class="evaluation-page">
+    <div class="container">
+        <div class="evaluation-card evaluation-thanks-card text-center">
+            <div class="evaluation-thanks-icon" aria-hidden="true">
+                <i class="bi bi-heart-fill"></i>
+            </div>
+            <span class="evaluation-label">MENSAGEM RECEBIDA</span>
+            <h1>Obrigado por compartilhar sua experiência!</h1>
+            <p class="evaluation-intro">
+                Recebemos sua avaliação ou reclamação. Nossa equipe vai
+                analisar sua mensagem com atenção. Ela só será publicada no
+                site depois da aprovação de um administrador.
+            </p>
+            <a
+                href="{% url 'core:home' %}"
+                class="btn btn-primary btn-lg">
+                <i class="bi bi-house me-1" aria-hidden="true"></i>
+                Voltar para o início
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

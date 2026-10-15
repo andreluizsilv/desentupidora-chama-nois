@@ -16,89 +16,83 @@ Dashboard | Chama Nóis
 
 {% block content %}
 
-<div class="dashboard-welcome">
-
-    <h1>
-        Olá, {{ request.user.username }}!
-    </h1>
-
-    <p>
-        Gerencie os trabalhos realizados e as avaliações
-        exibidas no site da Chama Nóis.
-    </p>
-
-</div>
-
-
-<div class="row g-4 mt-2">
-
-    <!-- TRABALHOS -->
-    <div class="col-md-6">
-
-<a
-        href="{% url 'core:novo_trabalho' %}"
-        class="btn btn-success">
-
-        Novo trabalho
-
-            <div class="dashboard-card">
-
-                <div class="dashboard-card-icon">
-                    <i class="bi bi-images"></i>
-                </div>
-
-                <div>
-                    <span>Trabalhos</span>
-
-                    <h2>0</h2>
-
-                    <p>
-                        Fotos e vídeos cadastrados
-                    </p>
-
-                    <span class="dashboard-card-action">
-                        Gerenciar trabalhos
-                        <i class="bi bi-arrow-right"></i>
-                    </span>
-
-                </div>
-
-            </div>
-
-        </a>
-
+<div class="container py-5">
+    <div class="dashboard-welcome">
+        <span class="dashboard-label">PAINEL DE CONTROLE</span>
+        <h1>Olá, {{ request.user.username }}!</h1>
+        <p>
+            Gerencie os trabalhos realizados exibidos no site da Chama Nóis.
+        </p>
     </div>
 
-
-    <!-- AVALIAÇÕES -->
-    <div class="col-md-6">
-
-        <div class="dashboard-card">
-
-            <div class="dashboard-card-icon orange">
-                <i class="bi bi-star-fill"></i>
-            </div>
-
-            <div>
-                <span>Avaliações</span>
-
-                <h2>0</h2>
-
-                <p>
-                    Avaliações cadastradas
-                </p>
-
-                <span class="dashboard-card-action">
-                    Gerenciar avaliações
-                    <i class="bi bi-arrow-right"></i>
-                </span>
-
-            </div>
-
+    <div class="row g-4 mt-2">
+        <div class="col-md-6">
+            <a
+                href="{% url 'core:trabalhos' %}"
+                class="dashboard-card-link">
+                <div class="dashboard-card">
+                    <div class="dashboard-card-icon">
+                        <i class="bi bi-images"></i>
+                    </div>
+                    <div>
+                        <span>Trabalhos</span>
+                        <h2>{{ trabalhos_count }}</h2>
+                        <p>Fotos e vídeos cadastrados</p>
+                        <span class="dashboard-card-action">
+                            Gerenciar trabalhos
+                            <i class="bi bi-arrow-right"></i>
+                        </span>
+                    </div>
+                </div>
+            </a>
         </div>
 
-    </div>
+        {% if request.user.is_superuser %}
+            <div class="col-md-6">
+                <a
+                    href="{% url 'core:gerenciar_usuarios' %}"
+                    class="dashboard-card-link">
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-icon orange">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <div>
+                            <span>Usuários</span>
+                            <h2>{{ usuarios_count }}</h2>
+                            <p>Contas com acesso ao painel</p>
+                            <span class="dashboard-card-action">
+                                Gerenciar acessos
+                                <i class="bi bi-arrow-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
 
+        {% if perms.core.view_avaliacao %}
+            <div class="col-md-6">
+                <a
+                    href="{% url 'core:gerenciar_avaliacoes' %}"
+                    class="dashboard-card-link">
+                    <div class="dashboard-card">
+                        <div class="dashboard-card-icon orange">
+                            <i class="bi bi-star-half"></i>
+                        </div>
+                        <div>
+                            <span>Avaliações</span>
+                            <h2>{{ avaliacoes_pendentes_count }}</h2>
+                            <p>Aguardando análise para publicação</p>
+                            <span class="dashboard-card-action">
+                                Analisar avaliações
+                                <i class="bi bi-arrow-right"></i>
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endif %}
+    </div>
 </div>
 
 {% endblock %}

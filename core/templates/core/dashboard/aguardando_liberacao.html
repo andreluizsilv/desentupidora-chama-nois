@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+Aguardando liberação | Chama Nóis
+{% endblock %}
+
+
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<section class="dashboard-login-body">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-logo">
+                <img
+                    src="{% static 'img/logo-chama-nois.png' %}"
+                    alt="Desentupidora Chama Nóis">
+                <div class="login-brand-copy">
+                    <span>CHAMA NÓIS</span>
+                    <p>Atendimento rápido e serviço de confiança.</p>
+                </div>
+            </div>
+
+            <div class="login-content">
+                <span class="login-badge">ACESSO PENDENTE</span>
+                <h1>Aguarde a liberação</h1>
+                <p>
+                    Seu cadastro foi recebido. O acesso ao dashboard estará
+                    disponível depois que o SuperAdmin liberar sua conta.
+                    Você pode voltar ao login e tentar novamente mais tarde.
+                </p>
+                <a
+                    href="{% url 'core:dashboard_login' %}"
+                    class="btn-login d-flex align-items-center justify-content-center text-decoration-none">
+                    <i class="bi bi-arrow-left me-2"></i>
+                    Voltar para o login
+                </a>
+                <a
+                    href="{% url 'core:home' %}"
+                    class="back-site">
+                    Voltar para o site
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

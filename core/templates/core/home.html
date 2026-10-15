@@ -224,99 +224,157 @@ Desentupidora Chama Nóis | Atendimento rápido
         </div>
 
 
-        <div class="row g-4">
+        {% if trabalhos %}
+            <div class="works-carousel" data-works-carousel>
+                <div
+                    class="works-carousel-track"
+                    data-works-track
+                    role="region"
+                    aria-label="Trabalhos realizados"
+                    tabindex="0">
+                    {% for trabalho in trabalhos %}
+                        <div class="works-carousel-item">
+                            <article class="work-card">
+                                <div class="work-comparison">
+                                    <div class="work-media">
+                                        <span class="work-media-label">Antes</span>
+                                        {% if trabalho.arquivo_antes %}
+                                            {% if trabalho.antes_eh_video %}
+                                                <video controls preload="metadata" playsinline>
+                                                    <source src="{{ trabalho.arquivo_antes.url }}">
+                                                    Seu navegador não suporta a reprodução de vídeo.
+                                                </video>
+                                            {% else %}
+                                                <img
+                                                    src="{{ trabalho.arquivo_antes.url }}"
+                                                    alt="Antes: {{ trabalho.titulo }}"
+                                                    loading="lazy">
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="work-no-media">Sem mídia</div>
+                                        {% endif %}
+                                    </div>
 
-            {% for trabalho in trabalhos %}
-
-                <div class="col-md-6 col-lg-4">
-
-                    <article class="work-card">
-
-                        <div class="work-comparison">
-                            <div class="work-media">
-                                <span class="work-media-label">Antes</span>
-                                {% if trabalho.arquivo_antes %}
-                                    {% if trabalho.antes_eh_video %}
-                                        <video controls preload="metadata" playsinline>
-                                            <source src="{{ trabalho.arquivo_antes.url }}">
-                                            Seu navegador não suporta a reprodução de vídeo.
-                                        </video>
-                                    {% else %}
-                                        <img
-                                            src="{{ trabalho.arquivo_antes.url }}"
-                                            alt="Antes: {{ trabalho.titulo }}"
-                                            loading="lazy">
+                                    <div class="work-media">
+                                        <span class="work-media-label after">Depois</span>
+                                        {% if trabalho.arquivo_depois %}
+                                            {% if trabalho.depois_eh_video %}
+                                                <video controls preload="metadata" playsinline>
+                                                    <source src="{{ trabalho.arquivo_depois.url }}">
+                                                    Seu navegador não suporta a reprodução de vídeo.
+                                                </video>
+                                            {% else %}
+                                                <img
+                                                    src="{{ trabalho.arquivo_depois.url }}"
+                                                    alt="Depois: {{ trabalho.titulo }}"
+                                                    loading="lazy">
+                                            {% endif %}
+                                        {% else %}
+                                            <div class="work-no-media">Sem mídia</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="work-content">
+                                    <h3>
+                                        {{ trabalho.titulo }}
+                                    </h3>
+                                    {% if trabalho.descricao %}
+                                        <p>
+                                            {{ trabalho.descricao|truncatewords:20 }}
+                                        </p>
                                     {% endif %}
-                                {% else %}
-                                    <div class="work-no-media">Sem mídia</div>
-                                {% endif %}
-                            </div>
-
-                            <div class="work-media">
-                                <span class="work-media-label after">Depois</span>
-                                {% if trabalho.arquivo_depois %}
-                                    {% if trabalho.depois_eh_video %}
-                                        <video controls preload="metadata" playsinline>
-                                            <source src="{{ trabalho.arquivo_depois.url }}">
-                                            Seu navegador não suporta a reprodução de vídeo.
-                                        </video>
-                                    {% else %}
-                                        <img
-                                            src="{{ trabalho.arquivo_depois.url }}"
-                                            alt="Depois: {{ trabalho.titulo }}"
-                                            loading="lazy">
-                                    {% endif %}
-                                {% else %}
-                                    <div class="work-no-media">Sem mídia</div>
-                                {% endif %}
-                            </div>
+                                </div>
+                            </article>
                         </div>
-
-
-                        <div class="work-content">
-
-                            <h3>
-                                {{ trabalho.titulo }}
-                            </h3>
-
-                            {% if trabalho.descricao %}
-
-                                <p>
-                                    {{ trabalho.descricao|truncatewords:20 }}
-                                </p>
-
-                            {% endif %}
-
-                        </div>
-
-                    </article>
-
+                    {% endfor %}
                 </div>
 
-            {% empty %}
-
-                <div class="col-12">
-
-                    <div class="empty-works">
-
-                        <i class="bi bi-images"></i>
-
-                        <p>
-                            Em breve, novos trabalhos realizados.
-                        </p>
-
+                {% if trabalhos|length > 1 %}
+                    <div class="works-carousel-nav" aria-label="Navegação dos trabalhos">
+                        <button
+                            class="works-carousel-button"
+                            type="button"
+                            data-works-prev
+                            aria-label="Ver trabalhos anteriores"
+                            disabled>
+                            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                        </button>
+                        <button
+                            class="works-carousel-button"
+                            type="button"
+                            data-works-next
+                            aria-label="Ver próximos trabalhos">
+                            <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                        </button>
                     </div>
-
-                </div>
-
-            {% endfor %}
-
-        </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="empty-works">
+                <i class="bi bi-images"></i>
+                <p>Em breve, novos trabalhos realizados.</p>
+            </div>
+        {% endif %}
 
     </div>
 
 </section>
 
+<!-- AVALIAÇÕES -->
+<section id="avaliacoes" class="reviews-section">
+    <div class="container">
+        <div class="section-title">
+            <span>AVALIAÇÕES</span>
+            <h2>O que nossos clientes dizem</h2>
+            <p>
+                Confira as avaliações publicadas após análise da nossa equipe.
+            </p>
+        </div>
+
+        {% if avaliacoes %}
+            <div class="row g-4">
+                {% for avaliacao in avaliacoes %}
+                    <div class="col-md-6 col-lg-4">
+                        <article class="review-card h-100">
+                            <div
+                                class="review-stars"
+                                aria-label="{{ avaliacao.nota }} de 5 estrelas">
+                                {% for _ in "12345" %}
+                                    {% if forloop.counter <= avaliacao.nota %}
+                                        <i class="bi bi-star-fill" aria-hidden="true"></i>
+                                    {% else %}
+                                        <i class="bi bi-star" aria-hidden="true"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <blockquote>{{ avaliacao.comentario }}</blockquote>
+                            <p class="review-author mb-0">
+                                {{ avaliacao.nome_cliente }}
+                            </p>
+                        </article>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-reviews">
+                <i class="bi bi-chat-heart" aria-hidden="true"></i>
+                <p>As primeiras avaliações dos nossos clientes aparecerão aqui.</p>
+            </div>
+        {% endif %}
+
+        <div class="text-center mt-4">
+            <a
+                href="{% url 'core:nova_avaliacao' %}"
+                class="btn btn-primary btn-lg">
+                <i class="bi bi-star me-1" aria-hidden="true"></i>
+                Deixe sua avaliação
+            </a>
+            <p class="review-moderation-note mt-3 mb-0">
+                As avaliações são analisadas antes de serem publicadas.
+            </p>
+        </div>
+    </div>
+</section>
 
 <!-- CTA -->
 <section class="cta-section">
@@ -358,4 +416,50 @@ Desentupidora Chama Nóis | Atendimento rápido
 
 </section>
 
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('[data-works-carousel]').forEach((carousel) => {
+        const track = carousel.querySelector('[data-works-track]');
+        const previousButton = carousel.querySelector('[data-works-prev]');
+        const nextButton = carousel.querySelector('[data-works-next]');
+
+        if (!track || !previousButton || !nextButton) {
+            return;
+        }
+
+        const updateButtons = () => {
+            const navigation = carousel.querySelector('.works-carousel-nav');
+            const hasOverflow = track.scrollWidth > track.clientWidth + 1;
+
+            if (navigation) {
+                navigation.hidden = !hasOverflow;
+            }
+
+            previousButton.disabled = track.scrollLeft <= 1;
+            nextButton.disabled =
+                track.scrollLeft + track.clientWidth >= track.scrollWidth - 1;
+        };
+
+        const scrollByCard = (direction) => {
+            const card = track.querySelector('.works-carousel-item');
+            if (!card) {
+                return;
+            }
+
+            const gap = parseFloat(getComputedStyle(track).gap) || 0;
+            track.scrollBy({
+                left: direction * (card.getBoundingClientRect().width + gap),
+                behavior: 'smooth',
+            });
+        };
+
+        previousButton.addEventListener('click', () => scrollByCard(-1));
+        nextButton.addEventListener('click', () => scrollByCard(1));
+        track.addEventListener('scroll', updateButtons, { passive: true });
+        window.addEventListener('resize', updateButtons);
+        updateButtons();
+    });
+</script>
 {% endblock %}

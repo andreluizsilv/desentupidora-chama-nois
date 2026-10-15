@@ -6,6 +6,12 @@
 Acesso | Chama Nóis
 {% endblock %}
 
+{% block extra_css %}
+<link
+    rel="stylesheet"
+    href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
 
 {% block content %}
 
@@ -22,6 +28,11 @@ Acesso | Chama Nóis
                     src="{% static 'img/logo-chama-nois.png' %}"
                     alt="Desentupidora Chama Nóis">
 
+                <div class="login-brand-copy">
+                    <span>CHAMA NÓIS</span>
+                    <p>Atendimento rápido e serviço de confiança.</p>
+                </div>
+
             </div>
 
 
@@ -37,14 +48,22 @@ Acesso | Chama Nóis
                 </h1>
 
                 <p>
-                    Entre para gerenciar os trabalhos
-                    e avaliações da Chama Nóis.
+                    Entre para acessar o painel da Chama Nóis.
                 </p>
 
+                {% if messages %}
+                    {% for message in messages %}
+                        <div
+                            class="alert alert-{{ message.tags|default:'info' }}"
+                            role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
 
                 {% if form.errors %}
 
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger" role="alert">
                         Usuário ou senha inválidos.
                     </div>
 
@@ -72,6 +91,7 @@ Acesso | Chama Nóis
                             id="{{ form.username.id_for_label }}"
                             class="form-control"
                             autocomplete="username"
+                            autofocus
                             required>
 
                     </div>
@@ -109,6 +129,19 @@ Acesso | Chama Nóis
                     </button>
 
                 </form>
+
+                <div class="login-signup-prompt">
+                    <p>
+                        Ainda não tem uma conta?
+                        <a href="{% url 'core:cadastro_usuario' %}">
+                            Criar conta
+                        </a>
+                    </p>
+                    <small>
+                        Após o cadastro, você será direcionado para a página
+                        de espera enquanto o SuperAdmin libera seu acesso.
+                    </small>
+                </div>
 
 
                 <a

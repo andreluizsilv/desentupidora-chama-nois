@@ -1,4 +1,3 @@
-from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from . import views
@@ -16,17 +15,80 @@ urlpatterns = [
 
     path(
         'dashboard/login/',
-        auth_views.LoginView.as_view(
-            template_name='core/dashboard/login.html',
-            redirect_authenticated_user=True
-        ),
+        views.DashboardLoginView.as_view(),
         name='dashboard_login'
+    ),
+
+    path(
+        'dashboard/aguardando-liberacao/',
+        views.aguardando_liberacao,
+        name='aguardando_liberacao'
+    ),
+
+    path(
+        'avaliar/',
+        views.nova_avaliacao,
+        name='nova_avaliacao'
+    ),
+
+    path(
+        'avaliar/agradecimento/',
+        views.agradecimento_avaliacao,
+        name='agradecimento_avaliacao'
+    ),
+
+    path(
+        'dashboard/cadastro/',
+        views.cadastro_usuario,
+        name='cadastro_usuario'
     ),
 
     path(
         'dashboard/',
         views.dashboard,
         name='dashboard'
+    ),
+
+    path(
+        'dashboard/usuarios/',
+        views.gerenciar_usuarios,
+        name='gerenciar_usuarios'
+    ),
+
+    path(
+        'dashboard/avaliacoes/',
+        views.gerenciar_avaliacoes,
+        name='gerenciar_avaliacoes'
+    ),
+
+    path(
+        'dashboard/avaliacoes/<int:avaliacao_id>/publicacao/',
+        views.alterar_publicacao_avaliacao,
+        name='alterar_publicacao_avaliacao'
+    ),
+
+    path(
+        'dashboard/avaliacoes/<int:avaliacao_id>/excluir/',
+        views.excluir_avaliacao,
+        name='excluir_avaliacao'
+    ),
+
+    path(
+        'dashboard/usuarios/<int:user_id>/acesso/',
+        views.alterar_acesso_usuario,
+        name='alterar_acesso_usuario'
+    ),
+
+    path(
+        'dashboard/usuarios/<int:user_id>/excluir/',
+        views.excluir_usuario,
+        name='excluir_usuario'
+    ),
+
+    path(
+        'dashboard/usuarios/<int:user_id>/editar/',
+        views.editar_usuario,
+        name='editar_usuario'
     ),
 
     path(
