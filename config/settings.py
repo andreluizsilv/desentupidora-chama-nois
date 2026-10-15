@@ -22,10 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-IS_RENDER = os.environ.get('RENDER', '').lower() == 'true'
+IS_RAILWAY = bool(os.environ.get('RAILWAY_ENVIRONMENT_NAME'))
+IS_HOSTED = IS_RAILWAY
 DEBUG = os.environ.get(
     'DJANGO_DEBUG',
-    'false' if IS_RENDER else 'true',
+    'false' if IS_HOSTED else 'true',
 ).lower() in {'true', '1', 'yes'}
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
@@ -44,9 +45,9 @@ ALLOWED_HOSTS = [
     ).split(',')
     if host.strip()
 ]
-render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if render_hostname and render_hostname not in ALLOWED_HOSTS:
-    ALLOWED_HOSTS.append(render_hostname)
+railway_hostname = os.environ.get('RAILWAY_PUBLIC_DOMAIN')
+if railway_hostname and railway_hostname not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(railway_hostname)
 
 if not DEBUG and not ALLOWED_HOSTS:
     raise ImproperlyConfigured(
@@ -167,7 +168,13 @@ STATICFILES_DIRS = [
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = Path(os.environ.get('MEDIA_ROOT', str(BASE_DIR / 'media')))
+railway_volume_path = os.environ.get('RAILWAY_VOLUME_MOUNT_PATH')
+default_media_root = (
+    Path(railway_volume_path) / 'media'
+    if railway_volume_path
+    else BASE_DIR / 'media'
+)
+MEDIA_ROOT = Path(os.environ.get('MEDIA_ROOT', str(default_media_root)))
 
 STORAGES = {
     'default': {
@@ -194,10 +201,10 @@ CSRF_TRUSTED_ORIGINS = [
     for origin in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', '').split(',')
     if origin.strip()
 ]
-if render_hostname:
-    render_origin = f'https://{render_hostname}'
-    if render_origin not in CSRF_TRUSTED_ORIGINS:
-        CSRF_TRUSTED_ORIGINS.append(render_origin)
+if railway_hostname:
+    railway_origin = f'https://{railway_hostname}'
+    if railway_origin not in CSRF_TRUSTED_ORIGINS:
+        CSRF_TRUSTED_ORIGINS.append(railway_origin)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
