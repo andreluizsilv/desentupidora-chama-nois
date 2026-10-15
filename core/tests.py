@@ -1,9 +1,23 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.test import TestCase
+from django.test import RequestFactory, TestCase
 from django.urls import reverse
 
+from config.views import server_error
 from .models import Avaliacao, TrabalhoRealizado
+
+
+class ServerErrorPageTest(TestCase):
+    def test_server_error_returns_standalone_500_page(self):
+        response = server_error(RequestFactory().get('/'))
+
+        self.assertEqual(response.status_code, 500)
+        self.assertContains(
+            response,
+            'Estamos com uma instabilidade',
+            status_code=500,
+        )
+        self.assertContains(response, 'Voltar para o início', status_code=500)
 
 
 class HomeTrabalhosTest(TestCase):

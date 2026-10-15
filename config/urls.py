@@ -22,6 +22,8 @@ from django.urls import include, path, re_path
 from django.views.static import serve
 
 
+handler500 = 'config.views.server_error'
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
